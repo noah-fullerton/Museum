@@ -1,6 +1,8 @@
 import os
 
-from flask import Flask
+from flask import Flask, Response
+from .APICalls import API_Caller 
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -24,8 +26,10 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    @app.route('/')
+    def display_images():
+        api = API_Caller()
+        image = api.get_image()
+        return Response(image, mimetype='image/jpeg')
     
     return app
